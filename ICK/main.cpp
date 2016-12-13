@@ -9,7 +9,7 @@ void renderScene(void)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);		// Clear buffers (color, depth)
 	glClearColor(0.0, 0.3, 0.3, 1.0);		// Set background
 
-	figuresController.paintFigure(1);
+	figuresController.paintFigures();
 
 	glutSwapBuffers();	//glFlush();	// Render now
 }
@@ -50,11 +50,11 @@ obs³uga wygl¹da tak ¿e tworzy siê std::vector<Figure> , podaje sie go do funkcji
 Przyklad dostania sie do poszczegolnych punktow danej figury podany jest ponizej
 
 for (int i = 0; i < figures2.size(); i++) {
-std::vector<Point> points = figures2[i].getPoints();
-std::cout << "Figure " << i + 1 << ":" << std::endl;
-for (int j = 0; j < points.size(); j++) {
-std::cout << "[" << j << "] (" << points[j].getX() << "," << points[j].getY() << ")" << std::endl;
-}
-std::cout << std::endl;
+	std::vector<Point> points = figures2[i].getPoints();
+	std::cout << "Figure " << i + 1 << ":" << std::endl;
+	for (int j = 0; j < points.size(); j++) {
+		std::cout << "[" << j << "] (" << points[j].getX() << "," << points[j].getY() << ")" << std::endl;
+	}
+	std::cout << std::endl;
 }
 */

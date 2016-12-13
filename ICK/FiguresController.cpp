@@ -36,10 +36,8 @@ void FiguresController::loadFiguresFromFile(char *filename) {
 	}
 }
 
-void FiguresController::paintFigure(int figureNumber)
+void FiguresController::paintFigure(std::vector<Point> singleFigurePoints)
 {
-	std::vector<Point> singleFigurePoints = this->getFigures()[figureNumber].getPoints();
-
 	glBegin(GL_QUADS);
 		glColor3f(0.3f, 0.65f, 1.0f);	// Light blue
 		for (int i = 0; i < singleFigurePoints.size(); i++)
@@ -49,4 +47,12 @@ void FiguresController::paintFigure(int figureNumber)
 			glVertex2f(x, y);
 		}
 	glEnd();
+}
+
+void FiguresController::paintFigures()
+{
+	for (int figureNumber = 0; figureNumber < this->figures.size(); figureNumber++)
+	{
+		this->paintFigure(this->figures[figureNumber].getPoints());
+	}
 }

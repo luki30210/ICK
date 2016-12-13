@@ -10,6 +10,7 @@ class FiguresController
 
 private:
 	std::vector<Figure> figures;
+	void paintFigure(std::vector<Point> singleFigurePoints);
 
 public:
 	FiguresController();
@@ -18,7 +19,7 @@ public:
 		return this->figures;
 	}
 	void loadFiguresFromFile(char *filename);
-	void paintFigure(int figureNumber);		// na razie public, póŸniej dorobi siê funkcjê rysuj¹c¹ wszystkie figury wykorzystuj¹c¹ private paintFigure()
+	void paintFigures();
 
 };
 
