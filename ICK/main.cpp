@@ -2,6 +2,7 @@
 #include "FiguresController.h"
 
 FiguresController figuresController;
+FiguresController backgroundController;
 
 void renderScene(void)
 {
@@ -9,7 +10,9 @@ void renderScene(void)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);		// Clear buffers (color, depth)
 	glClearColor(0.0, 0.0, 0.0, 1.0);		// Set background
 
+	
 	figuresController.paintFigures();
+	backgroundController.paintFigures();
 
 	glutSwapBuffers();	//glFlush();	// Render now
 }
@@ -19,7 +22,10 @@ int main(int argc, char **argv)
 
 	figuresController.loadFiguresFromFile("Resources/data/example.xml");
 	std::vector<Figure> figures2 = figuresController.getFigures();
+	backgroundController.loadFiguresFromFile("Resources/data/background.xml");
+
 	figuresController.setColor(255, 255, 255);
+	backgroundController.setColor(0, 255, 0);
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
