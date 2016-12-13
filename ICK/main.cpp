@@ -23,12 +23,25 @@ int main(int argc, char **argv)
 {
 	
 	//PRZYKLAD UZYCIA FUNKCJI loadFigures() i obs³ugi figur
+
+	/*
+		Klasa Point --- > 2 pola typu int x i y, oznaczajace pozycje x i y punktu w przestrzeni, klasa zawiera standardowe gettery i settery getX() setX() getY() setY()
+
+		Klasa Figure --- > zawiera pole typu std::vector<Point>, zawiera 2 metody publiczne getPoints() zwracaj¹c¹ std::vector<Point> ze wszystkimi punktami, oraz addPoint(), wstawiaj¹c¹ punkt do figury
+
+		funkcja loadFigures(char * xmlName, std::vector<Figure>& figures) xmlName - > sciezka do pliku xml, figures referencja do vectora przechowujacego figury
+
+		obs³uga wygl¹da tak ¿e tworzy siê std::vector<Figure> , podaje sie go do funkcji loadFigures(), a ona wczytuje do tego vectora wszystkie figury z pliku xml
+
+		Przyklad dostania sie do poszczegolnych punktow danej figury podany jest ponizej
+	*/
 	std::vector<Figure> figures;
 	loadFigures("Resources/data/example.xml", figures);
 	for (int i = 0; i < figures.size(); i++) {
 		std::vector<Point> points = figures[i].getPoints();
+		std::cout << "Figure " << i + 1 << ":" << std::endl;
 		for (int j = 0; j < points.size(); j++) {
-			std::cout << "x: " << points[j].getX() << " y: " << points[j].getY() << std::endl;
+			std::cout << "[" << j << "] (" << points[j].getX() << "," << points[j].getY() << ")" <<std::endl;
 		}
 		std::cout << std::endl;
 	}
