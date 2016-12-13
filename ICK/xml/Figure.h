@@ -5,6 +5,7 @@
 
 class Figure
 {
+
 public:
 	Figure() {}
 	virtual ~Figure() {}
@@ -16,6 +17,7 @@ protected:
 
 private:
 	std::vector<Point> points;
+
 };
 
 #endif // FIGURE_H
