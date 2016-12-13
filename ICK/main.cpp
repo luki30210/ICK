@@ -2,12 +2,8 @@
 #include "Dependencies\freeglut\freeglut.h"
 
 #include <iostream>
-#include <vector>
-#include "xml/Point.h"
-#include "xml/Figure.h"
-#include "xml/tinyxml2/tinyxml2.h"
+#include "FiguresController.h"
 
-void loadFigures(char * xmlName, std::vector<Figure>& figures);
 
 
 void renderScene(void)
@@ -35,17 +31,21 @@ int main(int argc, char **argv)
 
 		Przyklad dostania sie do poszczegolnych punktow danej figury podany jest ponizej
 	*/
-	std::vector<Figure> figures;
-	loadFigures("Resources/data/example.xml", figures);
-	for (int i = 0; i < figures.size(); i++) {
-		std::vector<Point> points = figures[i].getPoints();
+
+	//KONIEC PRZYKLADU
+
+	FiguresController figuresController;
+	figuresController.loadFiguresFromFile("Resources/data/example.xml");
+	std::vector<Figure> figures2 = figuresController.getFigures();
+
+	for (int i = 0; i < figures2.size(); i++) {
+		std::vector<Point> points = figures2[i].getPoints();
 		std::cout << "Figure " << i + 1 << ":" << std::endl;
 		for (int j = 0; j < points.size(); j++) {
-			std::cout << "[" << j << "] (" << points[j].getX() << "," << points[j].getY() << ")" <<std::endl;
+			std::cout << "[" << j << "] (" << points[j].getX() << "," << points[j].getY() << ")" << std::endl;
 		}
 		std::cout << std::endl;
 	}
-	//KONIEC PRZYKLADU
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
@@ -70,26 +70,4 @@ int main(int argc, char **argv)
 	glutMainLoop();
 
 	return 0;
-}
-void loadFigures(char * xmlName, std::vector<Figure>& figures) {
-	using namespace tinyxml2;
-	XMLDocument doc;
-	doc.LoadFile(xmlName);
-
-	XMLElement * figureElement = doc.FirstChildElement("root")->FirstChildElement("figure");//->FirstChildElement("point")->FirstAttribute()->IntValue();
-
-	while (figureElement != nullptr) {
-		Figure figure;
-		XMLElement * pointElement = figureElement->FirstChildElement("point");
-		while (pointElement != nullptr) {
-			int x, y;
-			pointElement->QueryAttribute("x", &x);
-			pointElement->QueryAttribute("y", &y);
-			Point point(x, y);
-			figure.addPoint(point);
-			pointElement = pointElement->NextSiblingElement();
-		}
-		figures.push_back(figure);
-		figureElement = figureElement->NextSiblingElement();
-	}
 }

@@ -30,6 +30,9 @@
     <ClCompile Include="xml\tinyxml2\tinyxml2.cpp">
       <Filter>Source Files\xml</Filter>
     </ClCompile>
+    <ClCompile Include="FiguresController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Resources\data\example.xml">
@@ -45,6 +48,9 @@
     </ClInclude>
     <ClInclude Include="xml\tinyxml2\tinyxml2.h">
       <Filter>Source Files\xml</Filter>
+    </ClInclude>
+    <ClInclude Include="FiguresController.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
