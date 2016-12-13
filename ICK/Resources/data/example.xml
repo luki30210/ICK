@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+
+<figure>
+	<point x="1" y="1"/>
+	<point x="1" y="100"/>
+	<point x="100" y="100"/>
+	<point x="100" y="1"/>
+</figure>
+<figure>
+	<point x="3" y="1"/>
+	<point x="1" y="100"/>
+	<point x="100" y="100"/>
+	<point x="100" y="1"/>
+	<point x="100" y="1"/>
+	<point x="100" y="1"/>
+	<point x="100" y="1"/>
+	<point x="100" y="1"/>
+	<point x="100" y="1"/>
+	<point x="100" y="1"/>
+</figure>
+<figure>
+	<point x="2" y="1"/>
+	<point x="1" y="100"/>
+	<point x="100" y="100"/>
+	<point x="100" y="1"/>
+</figure>
+<figure>
+	<point x="23" y="421"/>
+	<point x="1414" y="41"/>
+	<point x="41241" y="1100"/>
+	<point x="14100" y="21"/>
+</figure>
+
+</root>
