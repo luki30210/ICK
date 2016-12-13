@@ -1,30 +1,40 @@
-#include <windows.h>		// For MS Windows
-#include "Dependencies\freeglut\glut.h"		// GLUT, includes glu.h and gl.h
+#include "Dependencies\glew\glew.h"
+#include "Dependencies\freeglut\freeglut.h"
+#include <iostream>
 
-/* Handler for window-repaint event. Call back when the window first appears and whenever the window needs to be re-painted. */
-void display() {
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);		// Set background color to black and opaque
-	glClear(GL_COLOR_BUFFER_BIT);		// Clear the color buffer
+void renderScene(void)
+{
 
-	// Draw a Red 1x1 Square centered at origin
-	glBegin(GL_QUADS);		// Each set of 4 vertices form a quad
-		glColor3f(1.0f, 0.0f, 0.0f);	// Red
-		glVertex2f(-0.5f, -0.5f);	// x, y
-		glVertex2f(0.5f, -0.5f);
-		glVertex2f(0.5f, 0.5f);
-		glVertex2f(-0.5f, 0.5f);
-	glEnd();
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClearColor(0.0, 0.3, 0.3, 1.0);
 
-	glFlush();	// Render now
+	glutSwapBuffers();
 }
 
-/* Main function: GLUT runs as a console application starting at main()  */
-int main(int argc, char** argv) {
-	glutInit(&argc, argv);		// Initialize GLUT
-	glutCreateWindow("OpenGL Setup Test");		// Create a window with the given title
-	glutInitWindowSize(320, 320);		// Set the window's initial width & height
-	glutInitWindowPosition(50, 50);		// Position the window's initial top-left corner
-	glutDisplayFunc(display);		// Register display callback handler for window re-paint
-	glutMainLoop();		// Enter the infinitely event-processing loop
+int main(int argc, char **argv)
+{
+
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
+	glutInitWindowPosition(500, 500);
+	glutInitWindowSize(800, 600);
+	glutCreateWindow("OpenGL First Window");
+
+	glewInit();
+	if (glewIsSupported("GL_VERSION_4_5"))
+	{
+		std::cout << " GLEW Version is 4.5\n ";
+	}
+	else
+	{
+		std::cout << "GLEW 4.5 not supported\n ";
+	}
+
+	glEnable(GL_DEPTH_TEST);
+	// register callbacks
+	glutDisplayFunc(renderScene);
+
+	glutMainLoop();
+
 	return 0;
 }
