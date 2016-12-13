@@ -4,6 +4,10 @@
 
 FiguresController::FiguresController()
 {
+	this->color[0] = 0.3f;
+	this->color[1] = 0.65f;
+	this->color[2] = 1.0f;
+	this->color[3] = 1.f;
 }
 
 
@@ -39,7 +43,7 @@ void FiguresController::loadFiguresFromFile(char *filename) {
 void FiguresController::paintFigure(std::vector<Point> singleFigurePoints)
 {
 	glBegin(GL_QUADS);
-		glColor3f(0.3f, 0.65f, 1.0f);	// Light blue
+		glColor3f(color[0],color[1], color[2]);	// Light blue
 		for (int i = 0; i < singleFigurePoints.size(); i++)
 		{
 			GLfloat x = (GLfloat)singleFigurePoints[i].getX() / (1280/2) - 1,

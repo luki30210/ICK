@@ -7,7 +7,7 @@ void renderScene(void)
 {
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);		// Clear buffers (color, depth)
-	glClearColor(0.0, 0.3, 0.3, 1.0);		// Set background
+	glClearColor(0.0, 0.0, 0.0, 1.0);		// Set background
 
 	figuresController.paintFigures();
 
@@ -19,6 +19,7 @@ int main(int argc, char **argv)
 
 	figuresController.loadFiguresFromFile("Resources/data/example.xml");
 	std::vector<Figure> figures2 = figuresController.getFigures();
+	figuresController.setColor(255, 255, 255);
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
