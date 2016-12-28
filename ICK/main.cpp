@@ -6,16 +6,36 @@ FiguresController backgroundController;
 
 void renderScene(void)
 {
-
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);		// Clear buffers (color, depth)
 	glClearColor(0.0, 0.0, 0.0, 1.0);		// Set background
 
-	
 	figuresController.paintFigures();
 	backgroundController.paintFigures();
 
-	glutSwapBuffers();	//glFlush();	// Render now
+	glutSwapBuffers();
 }
+
+void processNormalKeys(unsigned char key, int x, int y)
+{
+
+	switch (key) {
+		case 27:
+			exit(0);
+			break;
+	}
+
+}
+
+void processSpecialKeys(int key, int x, int y) {
+
+	switch (key) {
+	case GLUT_KEY_END:
+		exit(0);
+		break;
+	}
+
+}
+
 
 int main(int argc, char **argv)
 {
@@ -37,10 +57,14 @@ int main(int argc, char **argv)
 
 	// register callbacks
 	glutDisplayFunc(renderScene);
+	glutIdleFunc(renderScene);
+	glutKeyboardFunc(processNormalKeys);
+	glutSpecialFunc(processSpecialKeys);
 
+	// enter GLUT event processing loop
 	glutMainLoop();
 
-	return 0;
+	return 1;
 }
 
 

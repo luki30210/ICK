@@ -48,7 +48,7 @@ void FiguresController::paintFigure(std::vector<Point> singleFigurePoints)
 		{
 			GLfloat x = (GLfloat)singleFigurePoints[i].getX() / (1280/2) - 1,
 				y = (GLfloat)singleFigurePoints[i].getY() / (720 / 2) - 1;
-			glVertex2f(x, y);
+			glVertex3f(x, y, 0);
 		}
 	glEnd();
 }
