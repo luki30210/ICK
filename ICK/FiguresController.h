@@ -12,6 +12,7 @@ private:
 	std::vector<Figure> figures;
 	void paintFigure(std::vector<Point> singleFigurePoints);
 	double color[4];
+	int above = 0;
 
 public:
 	FiguresController();

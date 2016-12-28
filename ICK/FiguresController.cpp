@@ -43,12 +43,12 @@ void FiguresController::loadFiguresFromFile(char *filename) {
 void FiguresController::paintFigure(std::vector<Point> singleFigurePoints)
 {
 	glBegin(GL_QUADS);
-		glColor3f(color[0],color[1], color[2]);	// Light blue
+		glColor3f(color[0],color[1], color[2]);
 		for (int i = 0; i < singleFigurePoints.size(); i++)
 		{
 			GLfloat x = (GLfloat)singleFigurePoints[i].getX() / (1280/2) - 1,
 				y = (GLfloat)singleFigurePoints[i].getY() / (720 / 2) - 1;
-			glVertex3f(x, y, 0);
+			glVertex3f(x, 0, y);
 		}
 	glEnd();
 }
