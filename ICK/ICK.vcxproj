@@ -120,6 +120,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CameraController.cpp" />
     <ClCompile Include="FiguresController.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="xml\Figure.cpp" />
@@ -130,6 +131,7 @@
     <Xml Include="Resources\data\example.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CameraController.h" />
     <ClInclude Include="FiguresController.h" />
     <ClInclude Include="xml\Figure.h" />
     <ClInclude Include="xml\Point.h" />

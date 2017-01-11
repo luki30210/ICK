@@ -40,7 +40,7 @@ void FiguresController::loadFiguresFromFile(char *filename) {
 	}
 }
 
-void FiguresController::paintFigure(std::vector<Point> singleFigurePoints)
+void FiguresController::paintFigure(std::vector<Point> singleFigurePoints, float height)
 {
 	glBegin(GL_QUADS);
 		glColor3f(color[0],color[1], color[2]);
@@ -48,7 +48,7 @@ void FiguresController::paintFigure(std::vector<Point> singleFigurePoints)
 		{
 			GLfloat x = (GLfloat)singleFigurePoints[i].getX() / (1280/2) - 1,
 				y = (GLfloat)singleFigurePoints[i].getY() / (720 / 2) - 1;
-			glVertex3f(x, 0, y);
+			glVertex3f(x, height, y);
 		}
 	glEnd();
 }
@@ -57,6 +57,14 @@ void FiguresController::paintFigures()
 {
 	for (int figureNumber = 0; figureNumber < this->figures.size(); figureNumber++)
 	{
-		this->paintFigure(this->figures[figureNumber].getPoints());
+		this->paintFigure(this->figures[figureNumber].getPoints(), 0.1f);
+	}
+}
+
+void FiguresController::paintBackground()
+{
+	for (int figureNumber = 0; figureNumber < this->figures.size(); figureNumber++)
+	{
+		this->paintFigure(this->figures[figureNumber].getPoints(), 0.0f);
 	}
 }

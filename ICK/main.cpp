@@ -1,17 +1,15 @@
 #include <iostream>
 #include "FiguresController.h"
+#include "CameraController.h"
 
 FiguresController figuresController;
 FiguresController backgroundController;
-float lx = 0.0f, lz = -1.0f;	// actual vector representing the camera's direction
-float x = 0.0f, z = 5.0f;	// XZ position of the camera
-float angle = 0.0f;		// angle for rotating triangle
-
+CameraController cameraController;
 
 void changeSize(int w, int h)
 {
 	if (h == 0) h = 1;	// Prevent a divide by zero, when window is too short (you cant make a window of zero width)
-	float ratio = w * 1.0 / h;
+	float ratio = w * 1.0f / h;
 
 	glMatrixMode(GL_PROJECTION);	// Use the Projection Matrix
 	glLoadIdentity();		// Reset Matrix
@@ -27,60 +25,72 @@ void renderScene(void)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear Color and Depth Buffers
 	glLoadIdentity();	// Reset transformations
 
-	// Set the camera
-	gluLookAt(x, 1.0f, z,
-		x + lx, 1.0f, z + lz,
-		0.0f, 1.0f, 0.0f);
+	glTranslatef(-CameraController::cameraX, 0.0f, -CameraController::cameraZ);
+	glRotatef(CameraController::cameraRotationY, 1.0f, 0.0f, 0.0f);
+	glRotatef(CameraController::cameraRotationX, 0.0f, 1.0f, 0.0f);
+	glTranslatef(0.0f, CameraController::cameraY, 0.0f);
+	
+	//gluLookAt(CameraController::cameraX, CameraController::cameraY, CameraController::cameraZ, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 
 	/* ------------------------------ TUTAJ KOD ------------------------------ */
 	
 	figuresController.paintFigures();
-	backgroundController.paintFigures();
+	backgroundController.paintBackground();
 
 	/* ----------------------------------------------------------------------- */
 	
 	glutSwapBuffers();
 }
 
-void processNormalKeys(unsigned char key, int x, int y)
+void Update()
 {
-
-	if (key == 27)
-		exit(0);
-
+	cameraController.UpdateKeyboardInput();
+	glutPostRedisplay();
 }
 
-void processSpecialKeys(int key, int xx, int yy)
+void KeyboardCallback(unsigned char key, int x, int y)
 {
+	cameraController.ManageKeyboardCallback(key, true);
+}
 
-	float fraction = 0.1f;
+void KeyboardUpCallback(unsigned char key, int x, int y)
+{
+	cameraController.ManageKeyboardCallback(key, false);
+}
 
-	switch (key) {
-	case GLUT_KEY_LEFT:
-		angle -= 0.01f;
-		lx = sin(angle);
-		lz = -cos(angle);
-		break;
-	case GLUT_KEY_RIGHT:
-		angle += 0.01f;
-		lx = sin(angle);
-		lz = -cos(angle);
-		break;
-	case GLUT_KEY_UP:
-		x += lx * fraction;
-		z += lz * fraction;
-		break;
-	case GLUT_KEY_DOWN:
-		x -= lx * fraction;
-		z -= lz * fraction;
-		break;
+void MouseWheelCallback(int wheel, int direction, int x, int y)
+{
+	if (direction > 0.0f)
+	{
+		CameraController::cameraY -= 1.0f;
 	}
+	if(direction < 0.0f)
+	{ 
+		CameraController::cameraY += 1.0f;
+	}
+}
 
+void MouseMotionCallback(int x, int y)
+{
+	
+	CameraController::cameraRotationX += (x - cameraController.currentX) / 10.0f;
+	CameraController::cameraRotationY += (y - cameraController.currentY) / 10.0f;
+
+	cameraController.currentX = x;
+	cameraController.currentY = y;
+}
+
+void MouseCallback(int button, int state, int x, int y)
+{
+	if (state == GLUT_DOWN)
+	{
+		cameraController.currentX = x;
+		cameraController.currentY = y;
+	}
 }
 
 int main(int argc, char **argv)
 {
-
 	// init GLUT and create window
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
@@ -91,9 +101,12 @@ int main(int argc, char **argv)
 	// register callbacks
 	glutDisplayFunc(renderScene);
 	glutReshapeFunc(changeSize);
-	glutIdleFunc(renderScene);
-	glutKeyboardFunc(processNormalKeys);
-	glutSpecialFunc(processSpecialKeys);
+	glutIdleFunc(Update);
+	glutKeyboardFunc(KeyboardCallback);
+	glutKeyboardUpFunc(KeyboardUpCallback);
+	glutMouseWheelFunc(MouseWheelCallback);
+	glutMotionFunc(MouseMotionCallback);
+	glutMouseFunc(MouseCallback);
 
 	// OpenGL init
 	glEnable(GL_DEPTH_TEST);

@@ -10,7 +10,7 @@ class FiguresController
 
 private:
 	std::vector<Figure> figures;
-	void paintFigure(std::vector<Point> singleFigurePoints);
+	void paintFigure(std::vector<Point> singleFigurePoints, float height);
 	double color[4];
 	int above = 0;
 
@@ -33,5 +33,6 @@ public:
 	}
 	void loadFiguresFromFile(char *filename);
 	void paintFigures();
+	void paintBackground();
 };
 
