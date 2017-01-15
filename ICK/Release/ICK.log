@@ -1,0 +1,11 @@
+﻿  CameraController.cpp
+  FiguresController.cpp
+FiguresController.cpp(46): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+FiguresController.cpp(47): warning C4018: '<': signed/unsigned mismatch
+FiguresController.cpp(58): warning C4018: '<': signed/unsigned mismatch
+FiguresController.cpp(66): warning C4018: '<': signed/unsigned mismatch
+  main.cpp
+  Figure.cpp
+  Point.cpp
+  tinyxml2.cpp
+LINK : fatal error LNK1104: cannot open file 'freeglut.lib'

@@ -89,6 +89,12 @@ void MouseCallback(int button, int state, int x, int y)
 	}
 }
 
+void timer(int value)
+{
+	Update();
+	glutTimerFunc(1000 / 60, timer, 0);
+}
+
 int main(int argc, char **argv)
 {
 	// init GLUT and create window
@@ -97,16 +103,17 @@ int main(int argc, char **argv)
 	glutInitWindowPosition(500, 100);
 	glutInitWindowSize(1280, 720);
 	glutCreateWindow("OpenGL Figures");
-
+	
 	// register callbacks
 	glutDisplayFunc(renderScene);
 	glutReshapeFunc(changeSize);
-	glutIdleFunc(Update);
+	//glutIdleFunc(Update);
 	glutKeyboardFunc(KeyboardCallback);
 	glutKeyboardUpFunc(KeyboardUpCallback);
 	glutMouseWheelFunc(MouseWheelCallback);
 	glutMotionFunc(MouseMotionCallback);
 	glutMouseFunc(MouseCallback);
+	timer(0);
 
 	// OpenGL init
 	glEnable(GL_DEPTH_TEST);

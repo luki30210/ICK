@@ -83,7 +83,7 @@ void CameraController::UpdateKeyboardInput()
 		speedX += -0.1f;
 	}
 
-	cameraZ += speedZ * 0.5f;
-	cameraX += speedX * 0.5f;
+	cameraZ += speedZ * 0.05f;
+	cameraX += speedX * 0.05f;
 	
 }
