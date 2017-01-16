@@ -120,9 +120,7 @@ int main(int argc, char **argv)
 
 	// Init figures
 	figuresController.loadFiguresFromFile("Resources/data/example.xml");
-	figuresController.setColor(100, 100, 255);
 	backgroundController.loadFiguresFromFile("Resources/data/background.xml");
-	backgroundController.setColor(0, 255, 0);
 
 	// enter GLUT event processing cycle
 	glutMainLoop();

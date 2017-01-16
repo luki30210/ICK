@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
 
-<figure>
+<figure r="255" g="12" b="100">
 	<point x="300" y="300"/>
 	<point x="300" y="700"/>
 	<point x="700" y="700"/>
 	<point x="700" y="300"/>
 </figure>
-<figure>
+<figure r="254" g="13" b="200">
 	<point x="1" y="1"/>
 	<point x="1" y="100"/>
 	<point x="100" y="100"/>
 	<point x="100" y="1"/>
 </figure>
-<figure>
+<figure r="10" g="14" b="255">
 	<point x="700" y="150"/>
 	<point x="900" y="250"/>
 	<point x="1100" y="150"/>

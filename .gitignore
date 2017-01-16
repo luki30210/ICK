@@ -2,3 +2,9 @@ x64/
 ICK/x64/
 ICK.sdf
 ICK.VC.opendb
+*.suo
+.vs/ICK/v14/.suo
+*.db
+ICK.VC.VC.opendb
+*.db
+.vs/ICK/v14/.suo
