@@ -6,7 +6,6 @@
 FiguresController figuresController;
 FiguresController backgroundController;
 CameraController cameraController;
-float x, y, z;
 
 void changeSize(int w, int h)
 {
@@ -52,9 +51,6 @@ void Update()
 {
 	cameraController.UpdateKeyboardInput();
 	glutPostRedisplay();
-	x = CameraController::cameraX;
-	y = CameraController::cameraY;
-	z = CameraController::cameraZ;
 }
 
 void KeyboardCallback(unsigned char key, int x, int y)
@@ -131,9 +127,9 @@ int main(int argc, char **argv)
 	
 	TwWindowSize(200, 400);
 	TwBar *bar = TwNewBar("Camera");
-	TwAddVarRO(bar, "x", TW_TYPE_FLOAT, &x, "");
-	TwAddVarRO(bar, "y", TW_TYPE_FLOAT, &y, "");
-	TwAddVarRO(bar, "z", TW_TYPE_FLOAT, &z, "");
+	TwAddVarRW(bar, "x", TW_TYPE_FLOAT, &CameraController::cameraX, "");
+	TwAddVarRW(bar, "y", TW_TYPE_FLOAT, &CameraController::cameraY, "");
+	TwAddVarRW(bar, "z", TW_TYPE_FLOAT, &CameraController::cameraZ, "");
 	// register callbacks
 	glutDisplayFunc(renderScene);
 	glutReshapeFunc(changeSize);
