@@ -6,6 +6,8 @@
 FiguresController figuresController;
 FiguresController backgroundController;
 CameraController cameraController;
+float dirx, diry, dirz;
+
 
 void changeSize(int w, int h)
 {
@@ -27,12 +29,12 @@ void renderScene(void)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear Color and Depth Buffers
 	glLoadIdentity();	// Reset transformations
 
-	glTranslatef(-CameraController::cameraX, 0.0f, -CameraController::cameraZ);
-	glRotatef(CameraController::cameraRotationY, 1.0f, 0.0f, 0.0f);
-	glRotatef(CameraController::cameraRotationX, 0.0f, 1.0f, 0.0f);
-	glTranslatef(0.0f, CameraController::cameraY, 0.0f);
+	//glTranslatef(-CameraController::cameraX, 0.0f, -CameraController::cameraZ);
+	//glRotatef(CameraController::cameraRotationY, 1.0f, 0.0f, 0.0f);
+	//glRotatef(CameraController::cameraRotationX, 0.0f, 1.0f, 0.0f);
+	//glTranslatef(0.0f, CameraController::cameraY, 0.0f);
 	
-	//gluLookAt(CameraController::cameraX, CameraController::cameraY, CameraController::cameraZ, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+	gluLookAt(CameraController::cameraX, CameraController::cameraY, CameraController::cameraZ, dirx, diry, dirz, 0.0f, 1.0f, 0.0f);
 
 	/* ------------------------------ TUTAJ KOD ------------------------------ */
 	
@@ -110,6 +112,9 @@ void timer(int value)
 int main(int argc, char **argv)
 {
 	// init GLUT and create window
+	dirx = CameraController::cameraX;
+	diry = CameraController::cameraY;
+	dirz = CameraController::cameraZ + 1.0f;
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowPosition(500, 100);
@@ -130,8 +135,9 @@ int main(int argc, char **argv)
 	TwAddVarRW(bar, "x", TW_TYPE_FLOAT, &CameraController::cameraX, "");
 	TwAddVarRW(bar, "y", TW_TYPE_FLOAT, &CameraController::cameraY, "");
 	TwAddVarRW(bar, "z", TW_TYPE_FLOAT, &CameraController::cameraZ, "");
-	TwAddVarRW(bar, "rotx", TW_TYPE_FLOAT, &CameraController::cameraRotationX, "");
-	TwAddVarRW(bar, "roty", TW_TYPE_FLOAT, &CameraController::cameraRotationY, "");
+	TwAddVarRW(bar, "dirx", TW_TYPE_FLOAT, &dirx, "");
+	TwAddVarRW(bar, "diry", TW_TYPE_FLOAT, &diry, "");
+	TwAddVarRW(bar, "dirz", TW_TYPE_FLOAT, &dirz, "");
 	// register callbacks
 	glutDisplayFunc(renderScene);
 	glutReshapeFunc(changeSize);
