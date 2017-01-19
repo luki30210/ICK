@@ -130,6 +130,8 @@ int main(int argc, char **argv)
 	TwAddVarRW(bar, "x", TW_TYPE_FLOAT, &CameraController::cameraX, "");
 	TwAddVarRW(bar, "y", TW_TYPE_FLOAT, &CameraController::cameraY, "");
 	TwAddVarRW(bar, "z", TW_TYPE_FLOAT, &CameraController::cameraZ, "");
+	TwAddVarRW(bar, "rotx", TW_TYPE_FLOAT, &CameraController::cameraRotationX, "");
+	TwAddVarRW(bar, "roty", TW_TYPE_FLOAT, &CameraController::cameraRotationY, "");
 	// register callbacks
 	glutDisplayFunc(renderScene);
 	glutReshapeFunc(changeSize);
