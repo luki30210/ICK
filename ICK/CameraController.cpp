@@ -1,8 +1,17 @@
 #include "CameraController.h"
 
-float CameraController::cameraX = 1.0f;
-float CameraController::cameraY = -5.0f;
-float CameraController::cameraZ = 10.0f;
+float CameraController::cameraX = 0.0f;
+float CameraController::cameraY = 10.0f;
+float CameraController::cameraZ = 0.0f;
+
+float CameraController::cameraDirX = 0.0f;
+float CameraController::cameraDirY = 0.0010f;
+float CameraController::cameraDirZ = 0.0f;
+
+float CameraController::cameraUpVectx = 0.0f;
+float CameraController::cameraUpVecty = 0.0f;
+float CameraController::cameraUpVectz = 1.0f;
+
 float CameraController::cameraRotationX = 0.0f;
 float CameraController::cameraRotationY = 45.0f;
 

@@ -62,7 +62,7 @@ void FiguresController::paintFigures()
 {
 	for (int figureNumber = 0; figureNumber < this->figures.size(); figureNumber++)
 	{
-		this->paintFigure(this->figures[figureNumber], 0.1f);
+		this->paintFigure(this->figures[figureNumber], 0.001f);
 	}
 }
 

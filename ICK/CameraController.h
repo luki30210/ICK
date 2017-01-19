@@ -7,6 +7,14 @@ public:
 	static float cameraY;
 	static float cameraZ;
 
+	static float cameraDirX;
+	static float cameraDirY;
+	static float cameraDirZ;
+
+	static float cameraUpVectx;
+	static float cameraUpVecty;
+	static float cameraUpVectz;
+
 	static float cameraRotationX;
 	static float cameraRotationY;
 

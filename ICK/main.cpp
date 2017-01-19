@@ -28,13 +28,13 @@ void renderScene(void)
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear Color and Depth Buffers
 	glLoadIdentity();	// Reset transformations
-
+	gluLookAt(CameraController::cameraX, CameraController::cameraY, CameraController::cameraZ, CameraController::cameraDirX, CameraController::cameraDirY, CameraController::cameraDirZ, CameraController::cameraUpVectx, CameraController::cameraUpVecty, CameraController::cameraUpVectz);
 	//glTranslatef(-CameraController::cameraX, 0.0f, -CameraController::cameraZ);
 	//glRotatef(CameraController::cameraRotationY, 1.0f, 0.0f, 0.0f);
 	//glRotatef(CameraController::cameraRotationX, 0.0f, 1.0f, 0.0f);
 	//glTranslatef(0.0f, CameraController::cameraY, 0.0f);
-	
-	gluLookAt(CameraController::cameraX, CameraController::cameraY, CameraController::cameraZ, dirx, diry, dirz, 0.0f, 1.0f, 0.0f);
+
+
 
 	/* ------------------------------ TUTAJ KOD ------------------------------ */
 	
@@ -112,9 +112,6 @@ void timer(int value)
 int main(int argc, char **argv)
 {
 	// init GLUT and create window
-	dirx = CameraController::cameraX;
-	diry = CameraController::cameraY;
-	dirz = CameraController::cameraZ + 1.0f;
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowPosition(500, 100);
@@ -135,9 +132,12 @@ int main(int argc, char **argv)
 	TwAddVarRW(bar, "x", TW_TYPE_FLOAT, &CameraController::cameraX, "");
 	TwAddVarRW(bar, "y", TW_TYPE_FLOAT, &CameraController::cameraY, "");
 	TwAddVarRW(bar, "z", TW_TYPE_FLOAT, &CameraController::cameraZ, "");
-	TwAddVarRW(bar, "dirx", TW_TYPE_FLOAT, &dirx, "");
-	TwAddVarRW(bar, "diry", TW_TYPE_FLOAT, &diry, "");
-	TwAddVarRW(bar, "dirz", TW_TYPE_FLOAT, &dirz, "");
+	TwAddVarRW(bar, "dirx", TW_TYPE_FLOAT, &CameraController::cameraDirX, "");
+	TwAddVarRW(bar, "diry", TW_TYPE_FLOAT, &CameraController::cameraDirY, "");
+	TwAddVarRW(bar, "dirz", TW_TYPE_FLOAT, &CameraController::cameraDirZ, "");
+	TwAddVarRW(bar, "upx", TW_TYPE_FLOAT, &CameraController::cameraUpVectx, "");
+	TwAddVarRW(bar, "upy", TW_TYPE_FLOAT, &CameraController::cameraUpVecty, "");
+	TwAddVarRW(bar, "upz", TW_TYPE_FLOAT, &CameraController::cameraUpVectz, "");
 	// register callbacks
 	glutDisplayFunc(renderScene);
 	glutReshapeFunc(changeSize);
