@@ -1,10 +1,12 @@
 #include <iostream>
 #include "FiguresController.h"
 #include "CameraController.h"
+#include "AntTweakBar/include/AntTweakBar.h"
 
 FiguresController figuresController;
 FiguresController backgroundController;
 CameraController cameraController;
+float x, y, z;
 
 void changeSize(int w, int h)
 {
@@ -17,6 +19,7 @@ void changeSize(int w, int h)
 	gluPerspective(45.0f, ratio, 0.1f, 100.0f);	// Set the correct perspective.
 
 	glMatrixMode(GL_MODELVIEW);	// Get Back to the Modelview
+	TwWindowSize(w, h);
 }
 
 void renderScene(void)
@@ -36,6 +39,9 @@ void renderScene(void)
 	
 	figuresController.paintFigures();
 	backgroundController.paintBackground();
+	TwDraw();
+
+
 
 	/* ----------------------------------------------------------------------- */
 	
@@ -46,11 +52,18 @@ void Update()
 {
 	cameraController.UpdateKeyboardInput();
 	glutPostRedisplay();
+	x = CameraController::cameraX;
+	y = CameraController::cameraY;
+	z = CameraController::cameraZ;
 }
 
 void KeyboardCallback(unsigned char key, int x, int y)
 {
-	cameraController.ManageKeyboardCallback(key, true);
+	if (!TwEventKeyboardGLUT(key, x, y)) {
+		{
+			cameraController.ManageKeyboardCallback(key, true);
+		}
+	}
 }
 
 void KeyboardUpCallback(unsigned char key, int x, int y)
@@ -60,32 +73,35 @@ void KeyboardUpCallback(unsigned char key, int x, int y)
 
 void MouseWheelCallback(int wheel, int direction, int x, int y)
 {
-	if (direction > 0.0f)
-	{
-		CameraController::cameraY -= 1.0f;
-	}
-	if(direction < 0.0f)
-	{ 
-		CameraController::cameraY += 1.0f;
-	}
+		if (direction > 0.0f)
+		{
+			CameraController::cameraY -= 1.0f;
+		}
+		if (direction < 0.0f)
+		{
+			CameraController::cameraY += 1.0f;
+		}
 }
 
 void MouseMotionCallback(int x, int y)
 {
-	
-	CameraController::cameraRotationX += (x - cameraController.currentX) / 10.0f;
-	CameraController::cameraRotationY += (y - cameraController.currentY) / 10.0f;
+	if (!TwEventMouseMotionGLUT(x,y)) {
+		CameraController::cameraRotationX += (x - cameraController.currentX) / 10.0f;
+		CameraController::cameraRotationY += (y - cameraController.currentY) / 10.0f;
 
-	cameraController.currentX = x;
-	cameraController.currentY = y;
+		cameraController.currentX = x;
+		cameraController.currentY = y;
+	}
 }
 
 void MouseCallback(int button, int state, int x, int y)
 {
-	if (state == GLUT_DOWN)
-	{
-		cameraController.currentX = x;
-		cameraController.currentY = y;
+	if (!TwEventMouseButtonGLUT(button, state, x, y)) {
+		if (state == GLUT_DOWN)
+		{
+			cameraController.currentX = x;
+			cameraController.currentY = y;
+		}
 	}
 }
 
@@ -103,16 +119,34 @@ int main(int argc, char **argv)
 	glutInitWindowPosition(500, 100);
 	glutInitWindowSize(1280, 720);
 	glutCreateWindow("OpenGL Figures");
+	int zmienna = 1;
+	/*
+	ANT TWEAK BAR KURWA
+	*/
+	TwInit(TW_OPENGL, NULL);
+	glutPassiveMotionFunc((GLUTmousemotionfun)TwEventMouseMotionGLUT);
+	glutSpecialFunc((GLUTspecialfun)TwEventSpecialGLUT);
+	TwGLUTModifiersFunc(glutGetModifiers);
+
 	
+	TwWindowSize(200, 400);
+	TwBar *bar = TwNewBar("Camera");
+	TwAddVarRO(bar, "x", TW_TYPE_FLOAT, &x, "");
+	TwAddVarRO(bar, "y", TW_TYPE_FLOAT, &y, "");
+	TwAddVarRO(bar, "z", TW_TYPE_FLOAT, &z, "");
 	// register callbacks
 	glutDisplayFunc(renderScene);
 	glutReshapeFunc(changeSize);
 	//glutIdleFunc(Update);
+	
 	glutKeyboardFunc(KeyboardCallback);
 	glutKeyboardUpFunc(KeyboardUpCallback);
 	glutMouseWheelFunc(MouseWheelCallback);
 	glutMotionFunc(MouseMotionCallback);
 	glutMouseFunc(MouseCallback);
+
+	
+
 	timer(0);
 
 	// OpenGL init
@@ -124,6 +158,6 @@ int main(int argc, char **argv)
 
 	// enter GLUT event processing cycle
 	glutMainLoop();
-
+	
 	return 1;
 }
