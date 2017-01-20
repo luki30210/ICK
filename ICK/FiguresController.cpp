@@ -47,7 +47,7 @@ void FiguresController::loadFiguresFromFile(char *filename) {
 void FiguresController::paintFigure(Figure figure, float height)
 {
 	std::vector<Point> singleFigurePoints = figure.getPoints();
-	glBegin(GL_QUADS);
+	glBegin(GL_POLYGON);
 		glColor3f(figure.r(),figure.g(),figure.b());
 		for (int i = 0; i < singleFigurePoints.size(); i++)
 		{

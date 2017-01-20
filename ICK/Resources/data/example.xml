@@ -19,5 +19,10 @@
 	<point x="1100" y="150"/>
 	<point x="900" y="100"/>
 </figure>
+<figure r="200" g="120" b="200">
+	<point x="1000" y="0"/>
+	<point x="1500" y="0"/>
+	<point x="1250" y="400"/>
+</figure>
 
 </root>
