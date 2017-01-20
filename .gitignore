@@ -6,5 +6,4 @@ ICK.VC.opendb
 .vs/ICK/v14/.suo
 *.db
 ICK.VC.VC.opendb
-*.db
-.vs/ICK/v14/.suo
+ICK.VC.db
