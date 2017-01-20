@@ -25,6 +25,11 @@ CameraController::~CameraController()
 
 }
 
+double CameraController::getFOVy(int frameHeight, double focalLength)
+{
+	return 2 * atan(frameHeight / (2 * focalLength)) * 57.2957795;
+}
+
 void CameraController::ManageKeyboardCallback(unsigned char key, bool keyDown)
 {
 	if (key == 'w')
@@ -94,5 +99,5 @@ void CameraController::UpdateKeyboardInput()
 
 	cameraZ += speedZ * 0.05f;
 	cameraX += speedX * 0.05f;
-	
+
 }

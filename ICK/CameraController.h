@@ -1,4 +1,5 @@
 #pragma once
+#include <cmath>
 
 class CameraController
 {
@@ -32,6 +33,8 @@ public:
 
 	CameraController();
 	~CameraController();
+
+	static double getFOVy(int frameHeight, double focalLength);
 
 private:
 

@@ -34,6 +34,9 @@ void renderScene(void)
 	//glRotatef(CameraController::cameraRotationX, 0.0f, 1.0f, 0.0f);
 	//glTranslatef(0.0f, CameraController::cameraY, 0.0f);
 
+	/* ------------------------------ OGNISKOWA ------------------------------ */
+	gluPerspective(CameraController::getFOVy(120, 150), 1280 / 720, 1, 20);		// getFOVy(wysokoœæ_widoku, ogniskowa)
+	/* ----------------------------------------------------------------------- */
 
 
 	/* ------------------------------ TUTAJ KOD ------------------------------ */
@@ -117,7 +120,7 @@ int main(int argc, char **argv)
 	glutInitWindowPosition(500, 100);
 	glutInitWindowSize(1280, 720);
 	glutCreateWindow("OpenGL Figures");
-	int zmienna = 1;
+
 	/*
 	ANT TWEAK BAR KURWA
 	*/
@@ -138,6 +141,8 @@ int main(int argc, char **argv)
 	TwAddVarRW(bar, "upx", TW_TYPE_FLOAT, &CameraController::cameraUpVectx, "");
 	TwAddVarRW(bar, "upy", TW_TYPE_FLOAT, &CameraController::cameraUpVecty, "");
 	TwAddVarRW(bar, "upz", TW_TYPE_FLOAT, &CameraController::cameraUpVectz, "");
+	
+
 	// register callbacks
 	glutDisplayFunc(renderScene);
 	glutReshapeFunc(changeSize);
