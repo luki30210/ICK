@@ -29,6 +29,8 @@ void Idle();
 void Timer(int value);
 
 float dirx, diry, dirz;
+int windowH, windowW;
+float focalLength = 150.0f;
 
 float viewportWidth = 0.0f;
 float viewportHeight = 0.0f;
@@ -105,6 +107,15 @@ void Display(void)
 
 	/* ------------------------------ OGNISKOWA ------------------------------ */
 	//gluPerspective(CameraController::getFOVy(120, 150), 1280 / 720, 1, 20);		// getFOVy(wysokoœæ_widoku, ogniskowa)
+	/*
+		glMatrixMode(GL_PROJECTION);	// Use the Projection Matrix
+		glLoadIdentity();
+		windowH = glutGet(GLUT_WINDOW_HEIGHT);
+		windowW = glutGet(GLUT_WINDOW_WIDTH);
+		glViewport(0, 0, windowW, windowH);
+		gluPerspective(CameraController::getFOVy(120, focalLength), windowW / windowH, 1, 20);		// getFOVy(wysokoœæ_widoku, ogniskowa)
+		glMatrixMode(GL_MODELVIEW);
+		*/
 	/* ----------------------------------------------------------------------- */
 
 	/* ------------------------------ TUTAJ KOD ------------------------------ */
@@ -255,6 +266,5 @@ void Timer(int value)
 			cameraController.Fly(translationSpeed);
 		}
 	}
-
 	glutTimerFunc(1000 / 60, Timer, 0);
 }
