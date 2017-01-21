@@ -1,3 +1,15 @@
+/*
+FPS Control
+
+SPACEBAR - toogle FPS control
+W, A, S, D - to move
+mouse - look around
+left/right mouse button - fly down/up
+
+*/
+
+
+#define _USE_MATH_DEFINES
 #include <iostream>
 #include "FiguresController.h"
 #include "CameraController.h"
@@ -6,111 +18,29 @@
 FiguresController figuresController;
 FiguresController backgroundController;
 CameraController cameraController;
+
+void Display();
+void Reshape(int w, int h);
+void KeyboardCallback(unsigned char key, int x, int y);
+void KeyboardUpCallback(unsigned char key, int x, int y);
+void MouseCallback(int button, int state, int x, int y);
+void MouseMotionCallback(int x, int y);
+void Idle();
+void Timer(int value);
+
 float dirx, diry, dirz;
 
+float viewportWidth = 0.0f;
+float viewportHeight = 0.0f;
+bool keyTable[256];
+bool fpsMode = false;
+bool mouseLeftDown = false;
+bool mouseRightDown = false;
 
-void changeSize(int w, int h)
-{
-	if (h == 0) h = 1;	// Prevent a divide by zero, when window is too short (you cant make a window of zero width)
-	float ratio = w * 1.0f / h;
-
-	glMatrixMode(GL_PROJECTION);	// Use the Projection Matrix
-	glLoadIdentity();		// Reset Matrix
-	glViewport(0, 0, w, h);	// Set the viewport to be the entire window
-	gluPerspective(45.0f, ratio, 0.1f, 100.0f);	// Set the correct perspective.
-
-	glMatrixMode(GL_MODELVIEW);	// Get Back to the Modelview
-	TwWindowSize(w, h);
-}
-
-void renderScene(void)
-{
-
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear Color and Depth Buffers
-	glLoadIdentity();	// Reset transformations
-	gluLookAt(CameraController::cameraX, CameraController::cameraY, CameraController::cameraZ, CameraController::cameraDirX, CameraController::cameraDirY, CameraController::cameraDirZ, CameraController::cameraUpVectx, CameraController::cameraUpVecty, CameraController::cameraUpVectz);
-	//glTranslatef(-CameraController::cameraX, 0.0f, -CameraController::cameraZ);
-	//glRotatef(CameraController::cameraRotationY, 1.0f, 0.0f, 0.0f);
-	//glRotatef(CameraController::cameraRotationX, 0.0f, 1.0f, 0.0f);
-	//glTranslatef(0.0f, CameraController::cameraY, 0.0f);
-
-	/* ------------------------------ OGNISKOWA ------------------------------ */
-	gluPerspective(CameraController::getFOVy(120, 150), 1280 / 720, 1, 20);		// getFOVy(wysokoœæ_widoku, ogniskowa)
-	/* ----------------------------------------------------------------------- */
+const float translationSpeed = 0.1f;
+const float rotationSpeed = M_PI / 180.0f * 0.08f;
 
 
-	/* ------------------------------ TUTAJ KOD ------------------------------ */
-	
-	figuresController.paintFigures();
-	backgroundController.paintBackground();
-	TwDraw();
-
-
-
-	/* ----------------------------------------------------------------------- */
-	
-	glutSwapBuffers();
-}
-
-void Update()
-{
-	cameraController.UpdateKeyboardInput();
-	glutPostRedisplay();
-}
-
-void KeyboardCallback(unsigned char key, int x, int y)
-{
-	if (!TwEventKeyboardGLUT(key, x, y)) {
-		{
-			cameraController.ManageKeyboardCallback(key, true);
-		}
-	}
-}
-
-void KeyboardUpCallback(unsigned char key, int x, int y)
-{
-	cameraController.ManageKeyboardCallback(key, false);
-}
-
-void MouseWheelCallback(int wheel, int direction, int x, int y)
-{
-		if (direction > 0.0f)
-		{
-			CameraController::cameraY -= 1.0f;
-		}
-		if (direction < 0.0f)
-		{
-			CameraController::cameraY += 1.0f;
-		}
-}
-
-void MouseMotionCallback(int x, int y)
-{
-	if (!TwEventMouseMotionGLUT(x,y)) {
-		CameraController::cameraRotationX += (x - cameraController.currentX) / 10.0f;
-		CameraController::cameraRotationY += (y - cameraController.currentY) / 10.0f;
-
-		cameraController.currentX = x;
-		cameraController.currentY = y;
-	}
-}
-
-void MouseCallback(int button, int state, int x, int y)
-{
-	if (!TwEventMouseButtonGLUT(button, state, x, y)) {
-		if (state == GLUT_DOWN)
-		{
-			cameraController.currentX = x;
-			cameraController.currentY = y;
-		}
-	}
-}
-
-void timer(int value)
-{
-	Update();
-	glutTimerFunc(1000 / 60, timer, 0);
-}
 
 int main(int argc, char **argv)
 {
@@ -122,41 +52,36 @@ int main(int argc, char **argv)
 	glutCreateWindow("OpenGL Figures");
 
 	/*
-	ANT TWEAK BAR KURWA
+	ANT TWEAK BAR
 	*/
 	TwInit(TW_OPENGL, NULL);
 	glutPassiveMotionFunc((GLUTmousemotionfun)TwEventMouseMotionGLUT);
 	glutSpecialFunc((GLUTspecialfun)TwEventSpecialGLUT);
 	TwGLUTModifiersFunc(glutGetModifiers);
 
-	
 	TwWindowSize(200, 400);
 	TwBar *bar = TwNewBar("Camera");
-	TwAddVarRW(bar, "x", TW_TYPE_FLOAT, &CameraController::cameraX, "");
-	TwAddVarRW(bar, "y", TW_TYPE_FLOAT, &CameraController::cameraY, "");
-	TwAddVarRW(bar, "z", TW_TYPE_FLOAT, &CameraController::cameraZ, "");
-	TwAddVarRW(bar, "dirx", TW_TYPE_FLOAT, &CameraController::cameraDirX, "");
-	TwAddVarRW(bar, "diry", TW_TYPE_FLOAT, &CameraController::cameraDirY, "");
-	TwAddVarRW(bar, "dirz", TW_TYPE_FLOAT, &CameraController::cameraDirZ, "");
-	TwAddVarRW(bar, "upx", TW_TYPE_FLOAT, &CameraController::cameraUpVectx, "");
-	TwAddVarRW(bar, "upy", TW_TYPE_FLOAT, &CameraController::cameraUpVecty, "");
-	TwAddVarRW(bar, "upz", TW_TYPE_FLOAT, &CameraController::cameraUpVectz, "");
+	TwAddVarRW(bar, "x", TW_TYPE_FLOAT, &cameraController.posX, "");
+	TwAddVarRW(bar, "y", TW_TYPE_FLOAT, &cameraController.posY, "");
+	TwAddVarRW(bar, "z", TW_TYPE_FLOAT, &cameraController.posZ, "");
+	TwAddVarRW(bar, "pitch", TW_TYPE_FLOAT, &cameraController.rotPitch, "");
+	TwAddVarRW(bar, "yaw", TW_TYPE_FLOAT, &cameraController.rotYaw, "");
+	TwAddVarRW(bar, "dirx", TW_TYPE_FLOAT, &cameraController.dirX, "");
+	TwAddVarRW(bar, "diry", TW_TYPE_FLOAT, &cameraController.dirY, "");
+	TwAddVarRW(bar, "dirz", TW_TYPE_FLOAT, &cameraController.dirZ, "");
 	
-
+	glutIgnoreKeyRepeat(1);
 	// register callbacks
-	glutDisplayFunc(renderScene);
-	glutReshapeFunc(changeSize);
-	//glutIdleFunc(Update);
-	
+	glutDisplayFunc(Display);
+	glutReshapeFunc(Reshape);
+	glutIdleFunc(Idle);
 	glutKeyboardFunc(KeyboardCallback);
 	glutKeyboardUpFunc(KeyboardUpCallback);
-	glutMouseWheelFunc(MouseWheelCallback);
 	glutMotionFunc(MouseMotionCallback);
+	glutPassiveMotionFunc(MouseMotionCallback);
 	glutMouseFunc(MouseCallback);
 
-	
-
-	timer(0);
+	Timer(0);
 
 	// OpenGL init
 	glEnable(GL_DEPTH_TEST);
@@ -169,4 +94,167 @@ int main(int argc, char **argv)
 	glutMainLoop();
 	
 	return 1;
+}
+
+void Display(void)
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear Color and Depth Buffers
+	glLoadIdentity();
+
+	cameraController.Refresh();
+
+	/* ------------------------------ OGNISKOWA ------------------------------ */
+	//gluPerspective(CameraController::getFOVy(120, 150), 1280 / 720, 1, 20);		// getFOVy(wysokoœæ_widoku, ogniskowa)
+	/* ----------------------------------------------------------------------- */
+
+	/* ------------------------------ TUTAJ KOD ------------------------------ */
+	figuresController.paintFigures();
+	backgroundController.paintBackground();
+	TwDraw();
+	/* ----------------------------------------------------------------------- */
+
+	glutSwapBuffers();
+}
+
+void Reshape(int w, int h)
+{
+	if (h == 0) h = 1;	// Prevent a divide by zero, when window is too short (you cant make a window of zero width)
+	float ratio = w * 1.0f / h;
+
+	viewportWidth = w;
+	viewportHeight = h;
+
+	glViewport(0, 0, w, h);	// Set the viewport to be the entire window
+	glMatrixMode(GL_PROJECTION);	// Use the Projection Matrix
+	glLoadIdentity();		// Reset Matrix
+	gluPerspective(45.0f, ratio, 0.1f, 100.0f);	// Set the correct perspective.
+	glMatrixMode(GL_MODELVIEW);	// Get Back to the Modelview
+	TwWindowSize(w, h);
+}
+
+void Idle()
+{
+	glutPostRedisplay();
+}
+
+void KeyboardCallback(unsigned char key, int x, int y)
+{
+	if (!TwEventKeyboardGLUT(key, x, y)) {
+		{
+			if (key == ' ')
+			{
+				fpsMode = !fpsMode;
+				if (fpsMode)
+				{
+					glutSetCursor(GLUT_CURSOR_NONE);
+					glutWarpPointer(viewportWidth / 2, viewportHeight / 2);
+				}
+				else
+				{
+					glutSetCursor(GLUT_CURSOR_LEFT_ARROW);
+				}
+			}
+
+			keyTable[key] = true;
+		}
+	}
+}
+
+void KeyboardUpCallback(unsigned char key, int x, int y)
+{
+	keyTable[key] = false;
+}
+
+void MouseMotionCallback(int x, int y)
+{
+	if (!TwEventMouseMotionGLUT(x, y))
+	{
+		static bool justWarped = false;
+
+		if (justWarped)
+		{
+			justWarped = false;
+			return;
+		}
+
+		if (fpsMode)
+		{
+			int dx = x - viewportWidth / 2;
+			int dy = y - viewportHeight / 2;
+
+			if (dx) {
+				cameraController.RotateYaw(rotationSpeed * dx);
+			}
+
+			if (dy) {
+				cameraController.RotatePitch(-rotationSpeed * dy);
+			}
+
+			glutWarpPointer(viewportWidth / 2, viewportHeight / 2);
+
+			justWarped = true;
+			
+		}
+	}
+}
+
+void MouseCallback(int button, int state, int x, int y)
+{
+	if (!TwEventMouseButtonGLUT(button, state, x, y)) {
+		if (state == GLUT_DOWN)
+		{
+			if (button == GLUT_LEFT_BUTTON)
+			{
+				mouseLeftDown = true;
+			}
+			else if (button == GLUT_RIGHT_BUTTON)
+			{
+				mouseRightDown = true;
+			}
+		}
+		else if (state == GLUT_UP)
+		{
+			if (button == GLUT_LEFT_BUTTON)
+			{
+				mouseLeftDown = false;
+			}
+			else if (button == GLUT_RIGHT_BUTTON)
+			{
+				mouseRightDown = false;
+			}
+		}
+	}
+}
+
+void Timer(int value)
+{
+	if (fpsMode)
+	{
+		if (keyTable['w'])
+		{
+			cameraController.Move(translationSpeed);
+		}
+		else if (keyTable['s'])
+		{
+			cameraController.Move(-translationSpeed);
+		}
+		else if (keyTable['a'])
+		{
+			cameraController.Strafe(translationSpeed);
+		}
+		else if (keyTable['d'])
+		{
+			cameraController.Strafe(-translationSpeed);
+		}
+		else if (mouseLeftDown)
+		{
+			cameraController.Fly(-translationSpeed);
+		}
+		else if (mouseRightDown)
+		{
+			cameraController.Fly(translationSpeed);
+		}
+	}
+
+	glutTimerFunc(1000 / 60, Timer, 0);
 }
