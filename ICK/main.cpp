@@ -30,7 +30,7 @@ void Timer(int value);
 
 float dirx, diry, dirz;
 int windowH, windowW;
-float focalLength = 450.0f;
+float focalLength = 200.0f;
 
 float viewportWidth = 0.0f;
 float viewportHeight = 0.0f;
@@ -71,6 +71,7 @@ int main(int argc, char **argv)
 	TwAddVarRW(bar, "dirx", TW_TYPE_FLOAT, &cameraController.dirX, "");
 	TwAddVarRW(bar, "diry", TW_TYPE_FLOAT, &cameraController.dirY, "");
 	TwAddVarRW(bar, "dirz", TW_TYPE_FLOAT, &cameraController.dirZ, "");
+	TwAddVarRW(bar, "focal length", TW_TYPE_FLOAT, &focalLength, "step=1 keyIncr='C' keyDecr='c'");
 
 	glutIgnoreKeyRepeat(1);
 	// register callbacks
@@ -246,6 +247,7 @@ void Timer(int value)
 		{
 			cameraController.Move(-translationSpeed);
 		}
+		
 		else if (keyTable['a'])
 		{
 			cameraController.Strafe(translationSpeed);
