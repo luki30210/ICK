@@ -30,7 +30,7 @@ void Timer(int value);
 
 float dirx, diry, dirz;
 int windowH, windowW;
-float focalLength = 150.0f;
+float focalLength = 450.0f;
 
 float viewportWidth = 0.0f;
 float viewportHeight = 0.0f;
@@ -71,7 +71,7 @@ int main(int argc, char **argv)
 	TwAddVarRW(bar, "dirx", TW_TYPE_FLOAT, &cameraController.dirX, "");
 	TwAddVarRW(bar, "diry", TW_TYPE_FLOAT, &cameraController.dirY, "");
 	TwAddVarRW(bar, "dirz", TW_TYPE_FLOAT, &cameraController.dirZ, "");
-	
+
 	glutIgnoreKeyRepeat(1);
 	// register callbacks
 	glutDisplayFunc(Display);
@@ -94,7 +94,7 @@ int main(int argc, char **argv)
 
 	// enter GLUT event processing cycle
 	glutMainLoop();
-	
+
 	return 1;
 }
 
@@ -106,16 +106,13 @@ void Display(void)
 	cameraController.Refresh();
 
 	/* ------------------------------ OGNISKOWA ------------------------------ */
-	//gluPerspective(CameraController::getFOVy(120, 150), 1280 / 720, 1, 20);		// getFOVy(wysokoœæ_widoku, ogniskowa)
-	/*
-		glMatrixMode(GL_PROJECTION);	// Use the Projection Matrix
-		glLoadIdentity();
-		windowH = glutGet(GLUT_WINDOW_HEIGHT);
-		windowW = glutGet(GLUT_WINDOW_WIDTH);
-		glViewport(0, 0, windowW, windowH);
-		gluPerspective(CameraController::getFOVy(120, focalLength), windowW / windowH, 1, 20);		// getFOVy(wysokoœæ_widoku, ogniskowa)
-		glMatrixMode(GL_MODELVIEW);
-		*/
+	glMatrixMode(GL_PROJECTION);	// Use the Projection Matrix
+	glLoadIdentity();
+	windowH = glutGet(GLUT_WINDOW_HEIGHT);
+	windowW = glutGet(GLUT_WINDOW_WIDTH);
+	glViewport(0, 0, windowW, windowH);
+	gluPerspective(CameraController::getFOVy(120, focalLength), windowW / windowH, 1, 20);		// getFOVy(wysokoœæ_widoku, ogniskowa)
+	glMatrixMode(GL_MODELVIEW);
 	/* ----------------------------------------------------------------------- */
 
 	/* ------------------------------ TUTAJ KOD ------------------------------ */
@@ -204,7 +201,7 @@ void MouseMotionCallback(int x, int y)
 			glutWarpPointer(viewportWidth / 2, viewportHeight / 2);
 
 			justWarped = true;
-			
+
 		}
 	}
 }

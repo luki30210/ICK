@@ -108,6 +108,11 @@ void CameraController::RotatePitch(float angle)
 	Refresh();
 }
 
+double CameraController::getFOVy(int frameHeight, double focalLength)
+{
+	return 2 * atan(frameHeight / (2 * focalLength)) * 57.2957795;
+}
+
 void CameraController::SetYaw(float angle)
 {
 	rotYaw = angle;
