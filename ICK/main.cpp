@@ -6,7 +6,8 @@
 FiguresController figuresController;
 FiguresController backgroundController;
 CameraController cameraController;
-float dirx, diry, dirz;
+int windowH, windowW;
+float focalLength = 150.0f;
 
 
 void changeSize(int w, int h)
@@ -35,7 +36,13 @@ void renderScene(void)
 	//glTranslatef(0.0f, CameraController::cameraY, 0.0f);
 
 	/* ------------------------------ OGNISKOWA ------------------------------ */
-	gluPerspective(CameraController::getFOVy(120, 150), 1280 / 720, 1, 20);		// getFOVy(wysokoœæ_widoku, ogniskowa)
+		glMatrixMode(GL_PROJECTION);	// Use the Projection Matrix
+		glLoadIdentity();
+		windowH = glutGet(GLUT_WINDOW_HEIGHT);
+		windowW = glutGet(GLUT_WINDOW_WIDTH);
+		glViewport(0, 0, windowW, windowH);
+		gluPerspective(CameraController::getFOVy(120, focalLength), windowW / windowH, 1, 20);		// getFOVy(wysokoœæ_widoku, ogniskowa)
+		glMatrixMode(GL_MODELVIEW);
 	/* ----------------------------------------------------------------------- */
 
 
@@ -141,6 +148,7 @@ int main(int argc, char **argv)
 	TwAddVarRW(bar, "upx", TW_TYPE_FLOAT, &CameraController::cameraUpVectx, "");
 	TwAddVarRW(bar, "upy", TW_TYPE_FLOAT, &CameraController::cameraUpVecty, "");
 	TwAddVarRW(bar, "upz", TW_TYPE_FLOAT, &CameraController::cameraUpVectz, "");
+	TwAddVarRW(bar, "focal Length", TW_TYPE_FLOAT, &focalLength, "step=1 keyIncr=z keyDecr=Z");
 	
 
 	// register callbacks
