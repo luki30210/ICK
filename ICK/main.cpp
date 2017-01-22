@@ -65,9 +65,9 @@ int main(int argc, char **argv)
 
 	TwWindowSize(200, 400);
 	TwBar *bar = TwNewBar("Camera");
-	TwAddVarRW(bar, "x", TW_TYPE_FLOAT, &cameraController.posX, "keyDecr='DOWN' keyIncr='UP'");
+	TwAddVarRW(bar, "x", TW_TYPE_FLOAT, &cameraController.posX, "step=0.1 keyDecr='DOWN' keyIncr='UP'");
 	TwAddVarRW(bar, "y", TW_TYPE_FLOAT, &cameraController.posY, "");
-	TwAddVarRW(bar, "z", TW_TYPE_FLOAT, &cameraController.posZ, "keyDecr='LEFT' keyIncr='RIGHT'");
+	TwAddVarRW(bar, "z", TW_TYPE_FLOAT, &cameraController.posZ, "step=0.1 keyDecr='LEFT' keyIncr='RIGHT'");
 	TwAddVarRW(bar, "pitch", TW_TYPE_FLOAT, &cameraController.rotPitch, "");
 	TwAddVarRW(bar, "yaw", TW_TYPE_FLOAT, &cameraController.rotYaw, "step=0.01");
 	TwAddVarRW(bar, "dirx", TW_TYPE_FLOAT, &cameraController.dirX, "");
