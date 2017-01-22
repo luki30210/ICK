@@ -105,17 +105,18 @@ void Display(void)
 	glLoadIdentity();
 
 	cameraController.Refresh();
-
+	
 	/* ------------------------------ OGNISKOWA ------------------------------ */
 	glMatrixMode(GL_PROJECTION);	// Use the Projection Matrix
 	glLoadIdentity();
 	windowH = glutGet(GLUT_WINDOW_HEIGHT);
 	windowW = glutGet(GLUT_WINDOW_WIDTH);
 	glViewport(0, 0, windowW, windowH);
-	gluPerspective(CameraController::getFOVy(120, focalLength), windowW / windowH, 1, 20);		// getFOVy(wysokoœæ_widoku, ogniskowa)
+	gluPerspective(CameraController::getFOVy(120, focalLength), windowW * 1.0f / windowH, 0.1f, 100.0f);		// getFOVy(wysokoœæ_widoku, ogniskowa)
 	glMatrixMode(GL_MODELVIEW);
-	/* ----------------------------------------------------------------------- */
 
+	/* ----------------------------------------------------------------------- */
+	
 	/* ------------------------------ TUTAJ KOD ------------------------------ */
 	figuresController.paintFigures();
 	backgroundController.paintBackground();
