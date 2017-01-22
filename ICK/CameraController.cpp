@@ -17,8 +17,8 @@ void CameraController::Init()
 	rotPitch = 0.0f;
 
 	SetPos(0.0f, 17.f, 1.0f);
-	SetPitch(-1.54915f);
-	SetYaw(-4.7114f);
+	SetPitch(-1.5709f);
+	SetYaw(3.1416f);
 }
 
 void CameraController::Refresh()

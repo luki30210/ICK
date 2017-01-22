@@ -27,10 +27,12 @@ void MouseCallback(int button, int state, int x, int y);
 void MouseMotionCallback(int x, int y);
 void Idle();
 void Timer(int value);
+void TW_CALL set2dMode(void *);
 
 float dirx, diry, dirz;
 int windowH, windowW;
 float focalLength = 200.0f;
+
 
 float viewportWidth = 0.0f;
 float viewportHeight = 0.0f;
@@ -63,15 +65,18 @@ int main(int argc, char **argv)
 
 	TwWindowSize(200, 400);
 	TwBar *bar = TwNewBar("Camera");
-	TwAddVarRW(bar, "x", TW_TYPE_FLOAT, &cameraController.posX, "");
+	TwAddVarRW(bar, "x", TW_TYPE_FLOAT, &cameraController.posX, "keyDecr='DOWN' keyIncr='UP'");
 	TwAddVarRW(bar, "y", TW_TYPE_FLOAT, &cameraController.posY, "");
-	TwAddVarRW(bar, "z", TW_TYPE_FLOAT, &cameraController.posZ, "");
+	TwAddVarRW(bar, "z", TW_TYPE_FLOAT, &cameraController.posZ, "keyDecr='LEFT' keyIncr='RIGHT'");
 	TwAddVarRW(bar, "pitch", TW_TYPE_FLOAT, &cameraController.rotPitch, "");
-	TwAddVarRW(bar, "yaw", TW_TYPE_FLOAT, &cameraController.rotYaw, "");
+	TwAddVarRW(bar, "yaw", TW_TYPE_FLOAT, &cameraController.rotYaw, "step=0.01");
 	TwAddVarRW(bar, "dirx", TW_TYPE_FLOAT, &cameraController.dirX, "");
 	TwAddVarRW(bar, "diry", TW_TYPE_FLOAT, &cameraController.dirY, "");
 	TwAddVarRW(bar, "dirz", TW_TYPE_FLOAT, &cameraController.dirZ, "");
 	TwAddVarRW(bar, "focal length", TW_TYPE_FLOAT, &focalLength, "step=1 keyIncr='C' keyDecr='c'");
+	TwAddButton(bar, "2D", set2dMode, NULL, " label='2D' ");
+
+
 
 	glutIgnoreKeyRepeat(1);
 	// register callbacks
@@ -146,7 +151,11 @@ void Idle()
 {
 	glutPostRedisplay();
 }
-
+void TW_CALL set2dMode(void *)
+{
+	cameraController.SetPitch(-1.5709f);
+	cameraController.SetYaw(3.1416f);	
+}
 void KeyboardCallback(unsigned char key, int x, int y)
 {
 	if (!TwEventKeyboardGLUT(key, x, y)) {
