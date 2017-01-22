@@ -70,9 +70,6 @@ int main(int argc, char **argv)
 	TwAddVarRW(bar, "z", TW_TYPE_FLOAT, &cameraController.posZ, "step=0.1 keyDecr='LEFT' keyIncr='RIGHT'");
 	TwAddVarRW(bar, "pitch", TW_TYPE_FLOAT, &cameraController.rotPitch, "");
 	TwAddVarRW(bar, "yaw", TW_TYPE_FLOAT, &cameraController.rotYaw, "step=0.01");
-	TwAddVarRW(bar, "dirx", TW_TYPE_FLOAT, &cameraController.dirX, "");
-	TwAddVarRW(bar, "diry", TW_TYPE_FLOAT, &cameraController.dirY, "");
-	TwAddVarRW(bar, "dirz", TW_TYPE_FLOAT, &cameraController.dirZ, "");
 	TwAddVarRW(bar, "focal length", TW_TYPE_FLOAT, &focalLength, "step=1 keyIncr='C' keyDecr='c'");
 	TwAddButton(bar, "2D", set2dMode, NULL, " label='2D' ");
 
@@ -153,8 +150,7 @@ void Idle()
 }
 void TW_CALL set2dMode(void *)
 {
-	cameraController.SetPitch(-1.5709f);
-	cameraController.SetYaw(3.1416f);	
+	cameraController.set2dView();
 }
 void KeyboardCallback(unsigned char key, int x, int y)
 {

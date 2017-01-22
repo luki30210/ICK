@@ -26,6 +26,9 @@ public:
 
 	static double getFOVy(int frameHeight, double focalLength);
 
+	//View
+	void set2dView();
+
 	float posX, posY, posZ;  // Positions
 	float dirX, dirY, dirZ; // Direction vector of where we are looking at
 	float rotYaw, rotPitch; // Various rotation angles

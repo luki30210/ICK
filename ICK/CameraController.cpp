@@ -113,6 +113,11 @@ double CameraController::getFOVy(int frameHeight, double focalLength)
 	return 2 * atan(frameHeight / (2 * focalLength)) * 57.2957795;
 }
 
+void CameraController::set2dView() {
+	SetPitch(-1.5709f);
+	SetYaw(3.1416f);
+}
+
 void CameraController::SetYaw(float angle)
 {
 	rotYaw = angle;
