@@ -42,7 +42,7 @@ bool mouseLeftDown = false;
 bool mouseRightDown = false;
 
 const float translationSpeed = 0.1f;
-const float rotationSpeed = M_PI / 180.0f * 0.08f;
+const float rotationSpeed = M_PI * 0.04f;
 
 
 

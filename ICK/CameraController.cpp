@@ -23,12 +23,12 @@ void CameraController::Init()
 
 void CameraController::Refresh()
 {
-	dirX = cos(rotYaw) * cos(rotPitch);
-	dirY = sin(rotPitch);
-	dirZ = sin(rotYaw) * cos(rotPitch);
+	dirX = cos((rotYaw + 90.0f) * M_PI / 180.0f) * cos(rotPitch * M_PI / 180.0f);
+	dirY = sin(rotPitch * M_PI / 180.0f);
+	dirZ = sin((rotYaw + 90.0f) * M_PI / 180.0f) * cos(rotPitch * M_PI / 180.0f);
 
-	strafeX = cos(rotYaw - M_PI_2);
-	strafeZ = sin(rotYaw - M_PI_2);
+	strafeX = cos((rotYaw) * M_PI / 180.0f);
+	strafeZ = sin((rotYaw) * M_PI / 180.0f);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -60,9 +60,9 @@ void CameraController::GetDirectionVector(float &x, float &y, float &z)
 
 void CameraController::Move(float incr)
 {
-	float lx = cos(rotYaw)*cos(rotPitch);
-	float ly = sin(rotPitch);
-	float lz = sin(rotYaw)*cos(rotPitch);
+	float lx = cos((rotYaw + 90.0f) * M_PI / 180.0f) * cos(rotPitch * M_PI / 180.0f);
+	float ly = sin(rotPitch * M_PI / 180.0f);
+	float lz = sin((rotYaw + 90.0f) * M_PI / 180.0f) * cos(rotPitch * M_PI / 180.0f);
 
 	posX = posX + incr * lx;
 	posY = posY + incr * ly;
@@ -89,13 +89,21 @@ void CameraController::Fly(float incr)
 void CameraController::RotateYaw(float angle)
 {
 	rotYaw += angle;
+	if (rotYaw > 360.0f)
+	{
+		rotYaw -= 360.0f;
+	}
+	if (rotYaw < 0.0f)
+	{
+		rotYaw = 360.0f + (rotYaw);
+	}
 
 	Refresh();
 }
 
 void CameraController::RotatePitch(float angle)
 {
-	const float limit = 89.0 * M_PI / 180.0;
+	const float limit = 89.0;
 
 	rotPitch += angle;
 
