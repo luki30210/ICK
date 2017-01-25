@@ -13,8 +13,8 @@ CameraController::~CameraController() {};
 
 void CameraController::Init()
 {
-	SetPos(0.0f, 5.5f, -9.0f);
-	SetPitch(-25.0f);
+	SetPos(0.0f, 10.f, 0.0f);
+	SetPitch(-90.0f);
 	SetYaw(0.0f);
 }
 
@@ -119,8 +119,8 @@ double CameraController::getFOVy(int frameHeight, double focalLength)
 }
 
 void CameraController::set2dView() {
-	SetPitch(-1.5709f);
-	SetYaw(3.1416f);
+	SetPitch(-90.f);
+	SetYaw(0.f);
 }
 
 void CameraController::SetYaw(float angle)
