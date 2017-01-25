@@ -51,8 +51,8 @@ void FiguresController::paintFigure(Figure figure, float height)
 		glColor3f(figure.r(),figure.g(),figure.b());
 		for (int i = 0; i < singleFigurePoints.size(); i++)
 		{
-			GLfloat x = (GLfloat)singleFigurePoints[i].getX() / (1280/2) - 1,
-				y = (GLfloat)singleFigurePoints[i].getY() / (720 / 2) - 1;
+			GLfloat x = -(GLfloat)singleFigurePoints[i].getX() / 720 - 1;
+			GLfloat y = (GLfloat)singleFigurePoints[i].getY() / 720 - 1;
 			glVertex3f(x, height, y);
 		}
 	glEnd();
