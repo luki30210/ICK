@@ -65,11 +65,14 @@ int main(int argc, char **argv)
 
 	TwWindowSize(200, 400);
 	TwBar *bar = TwNewBar("Camera");
-	TwAddVarRW(bar, "x", TW_TYPE_FLOAT, &cameraController.posX, "step=0.1 keyDecr='DOWN' keyIncr='UP'");
+	TwAddVarRW(bar, "x", TW_TYPE_FLOAT, &cameraController.posX, "step=0.1 keyDecr='LEFT' keyIncr='RIGHT'");
 	TwAddVarRW(bar, "y", TW_TYPE_FLOAT, &cameraController.posY, "");
-	TwAddVarRW(bar, "z", TW_TYPE_FLOAT, &cameraController.posZ, "step=0.1 keyDecr='LEFT' keyIncr='RIGHT'");
-	TwAddVarRW(bar, "pitch", TW_TYPE_FLOAT, &cameraController.rotPitch, "");
-	TwAddVarRW(bar, "yaw", TW_TYPE_FLOAT, &cameraController.rotYaw, "step=0.01");
+	TwAddVarRW(bar, "z", TW_TYPE_FLOAT, &cameraController.posZ, "step=0.1 keyDecr='DOWN' keyIncr='UP'");
+	//TwAddVarRW(bar, "dirx", TW_TYPE_FLOAT, &cameraController.dirX, "");
+	//TwAddVarRW(bar, "diry", TW_TYPE_FLOAT, &cameraController.dirY, ""); ## DO DEBUGOWANIA ##
+	//TwAddVarRW(bar, "dirz", TW_TYPE_FLOAT, &cameraController.dirZ, "");
+	TwAddVarRW(bar, "pitch", TW_TYPE_FLOAT, &cameraController.rotPitch, "min=-90 max=0");
+	TwAddVarRW(bar, "yaw", TW_TYPE_FLOAT, &cameraController.rotYaw, "step=1 min=0 max=360");
 	TwAddVarRW(bar, "focal length", TW_TYPE_FLOAT, &focalLength, "step=1 keyIncr='C' keyDecr='c'");
 	TwAddButton(bar, "2D", set2dMode, NULL, " label='2D' ");
 

@@ -20,9 +20,17 @@ void CameraController::Init()
 
 void CameraController::Refresh()
 {
-	dirX = cos((rotYaw + 90.0f) * M_PI / 180.0f) * cos(rotPitch * M_PI / 180.0f);
-	dirY = sin(rotPitch * M_PI / 180.0f);
-	dirZ = sin((rotYaw + 90.0f) * M_PI / 180.0f) * cos(rotPitch * M_PI / 180.0f);
+	if (rotPitch == -90.f) {
+		dirX = cos((rotYaw + 90.0f) * M_PI / 180.0f) * 0.00001;
+		dirY = sin(rotPitch * M_PI / 180.0f);
+		dirZ = sin((rotYaw + 90.0f) * M_PI / 180.0f) * 0.00001;
+	}
+	else {
+		dirX = cos((rotYaw + 90.0f) * M_PI / 180.0f) * cos(rotPitch * M_PI / 180.0f);
+		dirY = sin(rotPitch * M_PI / 180.0f);
+		dirZ = sin((rotYaw + 90.0f) * M_PI / 180.0f) * cos(rotPitch * M_PI / 180.0f);
+	}
+
 
 	strafeX = cos((rotYaw) * M_PI / 180.0f);
 	strafeZ = sin((rotYaw) * M_PI / 180.0f);
