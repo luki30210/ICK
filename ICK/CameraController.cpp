@@ -130,7 +130,8 @@ void CameraController::RotatePitch(float angle)
 }
 
 /*
-	£UKASZ - DODAJ KOMENTARZ
+	Zwraca pole widzenia obiektywu w stopniach - parametr ten u¿ywany jest przez funkcjê gluPerspective do ustawienia kamery.
+	Pierwszym parametrem funkcji (int frameHeight) jest wysokoœæ ramki w pierwszym planie. Drugi parametr (double focalLength) to ogniskowa.
 */
 double CameraController::getFOVy(int frameHeight, double focalLength)
 {
