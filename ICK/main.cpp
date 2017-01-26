@@ -1,13 +1,12 @@
 /*
 FPS Control
 
-SPACEBAR - toogle FPS control
-W, A, S, D - to move
-mouse - look around
-left/right mouse button - fly down/up
+SPACEBAR - prze³¹cza tryb pracy kamer¹ - sterowanie kamer¹ za pomoc¹ klawiatury i myszki
+W, A, S, D - poruszanie siê kamer¹
+mouse - rozgl¹danie siê (rotacja Yaw i Pitch)
+left/right mouse button - zwiêkszenie/obni¿enie wysokoœci na której znajduje siê kamera
 
 */
-
 
 #define _USE_MATH_DEFINES
 #include <iostream>
@@ -36,13 +35,13 @@ float focalLength = 200.0f;
 
 float viewportWidth = 0.0f;
 float viewportHeight = 0.0f;
-bool keyTable[256];
-bool fpsMode = false;
+bool keyTable[256];		//tablica 256 znaków do obs³ugi klawiatury
+bool fpsMode = false;	//zmienna za³¹czaj¹ca tryb poruszania kamer¹ za pomoc¹ klawiatury i myszki
 bool mouseLeftDown = false;
 bool mouseRightDown = false;
 
-const float translationSpeed = 0.1f;
-const float rotationSpeed = M_PI * 0.04f;
+const float translationSpeed = 0.1f;		//prêdkoœæ poruszania siê kamery
+const float rotationSpeed = M_PI * 0.04f;	//prêdkoœæ rotacji kamery
 
 
 
