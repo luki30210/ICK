@@ -14,8 +14,13 @@ left/right mouse button - zwiêkszenie/obni¿enie wysokoœci na której znajduje siê
 #include "CameraController.h"
 #include "AntTweakBar/include/AntTweakBar.h"
 
+//Wczytywanie figur
 FiguresController figuresController;
+
+//Wczytywanie t³a
 FiguresController backgroundController;
+
+//Sterowanie kamer¹
 CameraController cameraController;
 
 void Display();
@@ -56,6 +61,7 @@ int main(int argc, char **argv)
 
 	/*
 	ANT TWEAK BAR
+	###########################################################################################################################
 	*/
 	TwInit(TW_OPENGL, NULL);
 	glutPassiveMotionFunc((GLUTmousemotionfun)TwEventMouseMotionGLUT);
@@ -74,7 +80,14 @@ int main(int argc, char **argv)
 	TwAddVarRW(bar, "yaw", TW_TYPE_FLOAT, &cameraController.rotYaw, "step=1 min=0 max=360");
 	TwAddVarRW(bar, "focal length", TW_TYPE_FLOAT, &focalLength, "step=1 keyIncr='C' keyDecr='c'");
 	TwAddButton(bar, "2D", set2dMode, NULL, " label='2D' ");
-
+	/*
+	Aby usun¹æ bibliotekê AntTweakBar z kodu, nale¿y zakomentowaæ wszystko pomiêdzy poziomymi liniami stworzynymi przez znaki #####,
+	dodtkowo, w funkcji Display, zakomentowaæ lub usun¹æ instrukcjê TWDraw();, w funkcji Reshape() zakomentowaæ lub usun¹æ instrukcjê
+	TwWindowSize(w, h);, oraz w funkcjach  KeyboardCallback(), MouseMotionCallback(), MouseCallback(), pozbyæ siê instrukcji warunkowych if(),
+	if (!TwEventKeyboardGLUT(key, x, y)), if (!TwEventMouseMotionGLUT(x, y)),if (!TwEventMouseButtonGLUT(button, state, x, y)).
+	(Tylko instrukcja, wraz z klamr¹ otwieraj¹c¹ i zamykaj¹c¹. Blok instrukcji wewn¹trz instrukcji warunkwej if, musi zostaæ nienaruszony.
+	###############################################################################################################################
+	*/
 
 
 	glutIgnoreKeyRepeat(1);
@@ -124,7 +137,13 @@ void Display(void)
 	/* ------------------------------ TUTAJ KOD ------------------------------ */
 	figuresController.paintFigures();
 	backgroundController.paintBackground();
+	/*
+	############## ANTTWEAKBAR ############
+	*/
 	TwDraw();
+	/*
+	#######################################
+	*/
 	/* ----------------------------------------------------------------------- */
 
 	glutSwapBuffers();
@@ -143,7 +162,13 @@ void Reshape(int w, int h)
 	glLoadIdentity();		// Reset Matrix
 	gluPerspective(45.0f, ratio, 0.1f, 100.0f);	// Set the correct perspective.
 	glMatrixMode(GL_MODELVIEW);	// Get Back to the Modelview
+	/*
+	### ANTTWEAKBAR ###
+	*/
 	TwWindowSize(w, h);
+	/*
+	###################
+	*/
 }
 
 void Idle()

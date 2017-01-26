@@ -4,10 +4,7 @@
 
 FiguresController::FiguresController()
 {
-	this->color[0] = 0.3f;
-	this->color[1] = 0.65f;
-	this->color[2] = 1.0f;
-	this->color[3] = 1.f;
+
 }
 
 
