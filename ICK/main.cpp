@@ -256,8 +256,7 @@ void Timer(int value)
 		{
 			cameraController.Move(-translationSpeed);
 		}
-		
-		else if (keyTable['a'])
+		if (keyTable['a'])
 		{
 			cameraController.Strafe(translationSpeed);
 		}
@@ -265,7 +264,7 @@ void Timer(int value)
 		{
 			cameraController.Strafe(-translationSpeed);
 		}
-		else if (mouseLeftDown)
+		if (mouseLeftDown)
 		{
 			cameraController.Fly(-translationSpeed);
 		}
@@ -273,6 +272,14 @@ void Timer(int value)
 		{
 			cameraController.Fly(translationSpeed);
 		}
+	}
+	if (keyTable['+'])
+	{
+		focalLength += 0.5f;
+	}
+	else if (keyTable['-'])
+	{
+		focalLength -= 0.5f;
 	}
 	glutTimerFunc(1000 / 60, Timer, 0);
 }
