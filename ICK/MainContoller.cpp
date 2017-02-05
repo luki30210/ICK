@@ -1,19 +1,22 @@
 #include "MainController.h"
-
+FiguresController MainController::figuresController;		//Wczytywanie figur
+FiguresController MainController::backgroundController;	//Wczytywanie t³a
+CameraController MainController::cameraController;		//Sterowanie kamer¹
+float MainController::dirx, MainController::diry, MainController::dirz;
+int MainController::windowH, MainController::windowW;
+float MainController::focalLength;
+float MainController::viewportWidth;
+float MainController::viewportHeight;
+bool MainController::keyTable[256];		//tablica 256 znaków do obs³ugi klawiatury
+bool MainController::fpsMode;			//zmienna za³¹czaj¹ca tryb poruszania kamer¹ za pomoc¹ klawiatury i myszki
+bool MainController::mouseLeftDown;
+bool MainController::mouseRightDown;
+float MainController::translationSpeed;		//prêdkoœæ poruszania siê kamery
+float MainController::rotationSpeed;			//prêdkoœæ rotacji kamery
 
 
 MainController::MainController()
 {
-}
-
-
-MainController::~MainController()
-{
-}
-
-void MainController::Init()
-{
-	/*Init values*/
 	focalLength = 200.0f;
 	viewportWidth = 0.0f;
 	viewportHeight = 0.0f;
@@ -22,6 +25,26 @@ void MainController::Init()
 	mouseRightDown = false;
 	translationSpeed = 0.1f;
 	rotationSpeed = M_PI * 0.04f;
+	figuresController.loadFiguresFromFile("Resources/data/example.xml");
+	backgroundController.loadFiguresFromFile("Resources/data/background.xml");
+}
+
+
+MainController::~MainController()
+{
+}
+
+void MainController::Init(int argc, char **argv)
+{
+
+	// Inicjowanie GLUT i tworzenie okna
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
+	glutInitWindowPosition(500, 100);
+	glutInitWindowSize(1280, 720);
+	glutCreateWindow("OpenGL Figures");
+	glEnable(GL_DEPTH_TEST);	// OpenGL init
+	/*Init values*/
 
 	/*
 	ANT TWEAK BAR
@@ -65,6 +88,7 @@ void MainController::Init()
 	glutMouseFunc(MainController::MouseCallback);
 
 	Timer(0);
+	glutMainLoop();	// enter GLUT event processing cycle
 }
 
 void MainController::Display(void)
@@ -86,8 +110,9 @@ void MainController::Display(void)
 	/* ----------------------------------------------------------------------- */
 
 	/* ------------------------------ TUTAJ KOD ------------------------------ */
-	figuresController.paintFigures();
 	backgroundController.paintBackground();
+	figuresController.paintFigures();
+
 	/*
 	############## ANTTWEAKBAR ############
 	*/
@@ -246,7 +271,7 @@ void MainController::Timer(int value)
 		if (keyTable['a'])
 		{
 			cameraController.Strafe(translationSpeed);
-		}
+		
 		else if (keyTable['d'])
 		{
 			cameraController.Strafe(-translationSpeed);

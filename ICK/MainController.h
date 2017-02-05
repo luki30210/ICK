@@ -37,7 +37,7 @@ private:
 public:
 	MainController();
 	~MainController();
-	static void Init();
+	void Init(int argc, char **argv);
 public:
 	static void Display();
 	static void Reshape(int w, int h);
