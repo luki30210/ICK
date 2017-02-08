@@ -123,7 +123,6 @@
     <ClCompile Include="CameraController.cpp" />
     <ClCompile Include="FiguresController.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MainContoller.cpp" />
     <ClCompile Include="xml\Figure.cpp" />
     <ClCompile Include="xml\Point.cpp" />
     <ClCompile Include="xml\tinyxml2\tinyxml2.cpp" />
@@ -134,7 +133,7 @@
   <ItemGroup>
     <ClInclude Include="CameraController.h" />
     <ClInclude Include="FiguresController.h" />
-    <ClInclude Include="MainController.h" />
+    <ClInclude Include="main.h" />
     <ClInclude Include="xml\Figure.h" />
     <ClInclude Include="xml\Point.h" />
     <ClInclude Include="xml\tinyxml2\tinyxml2.h" />
